@@ -14,21 +14,21 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static int[] tabInt;
-    public static List<File> fileList;
+    public static List<Integer> numberList;
 
     public static void main(String[] args) {
 	// write your code here
 
-        fileList = new ArrayList<>();
+        numberList = new ArrayList<>();
         tabInt = new int[200];
         for(int i = 0; i< 200; i++){
             tabInt[i] = -1;
         }
 
-        Client c = new Client("localhost", 5501);
-        c.connect();
-        c.sendMessage();
-        c.disconnect();
+//        Client c = new Client("localhost", 5501);
+//        c.connect();
+//        c.sendMessage();
+//        c.disconnect();
 //        FileClient fc = new FileClient("localhost", 5501, "pliki");
 //        fc.connect();
 //        // przesyłanie plików do servera
@@ -43,54 +43,12 @@ public class Main {
 //        zp.packageArchive(files, "archiwum.zip");
 //        zp.unpackageArchive(Path.of("pliki_out"), "archiwum.zip");
 
-        Thread threadFile = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                File[] fils = Paths.get("pliki").toFile().listFiles();
-                fileList = Arrays.stream(fils).collect(Collectors.toList());
-                for (int i = 0; i< 15; i++){
-                    fils = Paths.get("pliki").toFile().listFiles();
-                    if (fils.length != fileList.size()){
-                        
-                        System.out.println("Zmieniła się liczba plików");
-                    }
-                    try {
-                        Thread.sleep(6000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-
-
-            }
-        });
-
-
-        Thread th = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println(Thread.currentThread().getName());
-                for(int i = 0; i < 20; i++){
-                    System.out.println("Wartość "+ i);
-                    try {
-                        Thread.sleep(400);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-//        th.start();
-//        try {
-//            th.join();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        testThread test = new testThread();
+//        // wielowątkowść
+        testThread test = new testThread();
+//      // wykonaie wątków implementujących interfejs Runnable
 //        test.startRunnable(10);
-//
-//        System.out.println("Zakończenie wątka głównego");
+//          // // wykonaie wątków implementujących interfejs Callable
+        test.startCalable(10);
+        System.out.println("Zakończenie wątka głównego");
     }
 }
