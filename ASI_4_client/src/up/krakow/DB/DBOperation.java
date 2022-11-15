@@ -2,6 +2,7 @@ package up.krakow.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class DBOperation {
 
@@ -12,6 +13,17 @@ public class DBOperation {
     }
 
     public void insertPerson(String name, String lastName, int age){
-        PreparedStatement preper = conn.prepareStatement();
+        try {
+            PreparedStatement preper = conn.prepareStatement(
+                    "INSERT INTO Person" +
+                    "(Name, LastName, Age) VALUES (?,?,?) ");
+            preper.setString(1, name);
+            preper.setString(2, lastName);
+            preper.setInt(3, age);
+            int result = preper.executeUpdate();
+            System.out.println("Dodane rekordy " + result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
