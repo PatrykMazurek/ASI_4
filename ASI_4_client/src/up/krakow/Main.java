@@ -1,5 +1,7 @@
 package up.krakow;
 
+import up.krakow.testThread.TikTak;
+import up.krakow.testThread.startTikTak;
 import up.krakow.testThread.testRunnable;
 import up.krakow.testThread.testThread;
 
@@ -44,11 +46,24 @@ public class Main {
 //        zp.unpackageArchive(Path.of("pliki_out"), "archiwum.zip");
 
 //        // wielowątkowść
-        testThread test = new testThread();
+//        testThread test = new testThread();
 //      // wykonaie wątków implementujących interfejs Runnable
 //        test.startRunnable(10);
 //          // // wykonaie wątków implementujących interfejs Callable
-        test.startCalable(10);
+//        test.startCalable(10);
+        TikTak tt = new TikTak();
+
+        startTikTak t1 = new startTikTak("Tik", tt);
+        startTikTak t2 = new startTikTak("Tak", tt);
+
+        try {
+            t1.th.join();
+            t2.th.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
         System.out.println("Zakończenie wątka głównego");
     }
 }
