@@ -15,14 +15,14 @@ public class startTikTak implements Runnable {
     public void run() {
         if (th.getName().compareTo("Tik") == 0){
             for (int i = 0; i< 7;i++){
-                tt.Tik(true);
+                tt.zak(true);
             }
-            tt.Tik(false);
+            tt.zak(false);
         }else {
             for (int i = 0; i< 7;i++){
-                tt.Tak(true);
+                tt.zak(true);
             }
-            tt.Tak(false);
+            tt.zak(false);
         }
     }
 }

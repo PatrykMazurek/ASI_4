@@ -1,5 +1,6 @@
 package up.krakow;
 
+import up.krakow.DB.DBConnection;
 import up.krakow.testThread.TikTak;
 import up.krakow.testThread.startTikTak;
 import up.krakow.testThread.testRunnable;
@@ -17,10 +18,10 @@ public class Main {
 
     public static int[] tabInt;
     public static List<Integer> numberList;
-
+    public static int number;
     public static void main(String[] args) {
 	// write your code here
-
+        number = 0;
         numberList = new ArrayList<>();
         tabInt = new int[200];
         for(int i = 0; i< 200; i++){
@@ -51,18 +52,22 @@ public class Main {
 //        test.startRunnable(10);
 //          // // wykonaie wątków implementujących interfejs Callable
 //        test.startCalable(10);
-        TikTak tt = new TikTak();
+//        TikTak tt = new TikTak();
+//
+//        startTikTak t1 = new startTikTak("Tik", tt);
+//        startTikTak t2 = new startTikTak("Tak", tt);
+//
+//        try {
+//            t1.th.join();
+//            t2.th.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
-        startTikTak t1 = new startTikTak("Tik", tt);
-        startTikTak t2 = new startTikTak("Tak", tt);
-
-        try {
-            t1.th.join();
-            t2.th.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        DBConnection conn = new DBConnection();
+        conn.connectToSQLite();
+        conn.createTable();
+        conn.disconnect();
 
         System.out.println("Zakończenie wątka głównego");
     }
