@@ -24,6 +24,22 @@ public class DBConnection {
         return null;
     }
 
+    public Connection connectToMySql(){
+        try {
+//            System.setProperty("jdbc.drivers", "com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3307/test",
+                    "root",
+                    "usbw"
+            );
+            System.out.println("Nawiązano połoczenie");
+            return conn;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void createTable(){
         try {
             PreparedStatement preper = conn.prepareStatement(

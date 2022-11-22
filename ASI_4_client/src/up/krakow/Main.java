@@ -1,6 +1,7 @@
 package up.krakow;
 
 import up.krakow.DB.DBConnection;
+import up.krakow.DB.DBOperation;
 import up.krakow.testThread.TikTak;
 import up.krakow.testThread.startTikTak;
 import up.krakow.testThread.testRunnable;
@@ -9,6 +10,7 @@ import up.krakow.testThread.testThread;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -65,8 +67,13 @@ public class Main {
 //        }
 
         DBConnection conn = new DBConnection();
-        conn.connectToSQLite();
-        conn.createTable();
+        Connection c = conn.connectToMySql();
+        DBOperation operation = new DBOperation(c);
+//        operation.insertPerson("Jan", "Nowak", 36);
+//        conn.connectToSQLite();
+        operation.getCountPersonProc();
+        operation.getAllPersonProc();
+//        conn.createTable();
         conn.disconnect();
 
         System.out.println("Zakończenie wątka głównego");
