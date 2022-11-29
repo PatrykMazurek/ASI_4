@@ -12,9 +12,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -77,12 +75,28 @@ public class Main {
 ////        conn.createTable();
 //        conn.disconnect();
 
-        UDPClient client = new UDPClient();
-        for (int i=0; i<15; i++){
-            client.sendMessage(i+"");
-        }
-        client.sendMessage("end");
-        client.close();
+//        UDPClient client = new UDPClient();
+//        for (int i=0; i<15; i++){
+//            client.sendMessage(i+"");
+//        }
+//        client.sendMessage("end");
+//        client.close();
+
+        BoardGame bg = new BoardGame();
+        List<BoardGame> listBordGame = bg.initListGame();
+
+        Map<Integer, List<BoardGame>> mapGame = listBordGame.stream()
+                .filter(g -> g.name.contains(" "))
+                .filter(g -> g.rating > 7.5)
+                .filter(g -> g.price < 50)
+                        .collect(Collectors.groupingBy(BoardGame::getYear));
+
+        BoardGame maxBG = listBordGame.stream()
+                .max(Comparator.comparing(BoardGame::getPrice)).get();
+
+        System.out.println(maxBG);
+
+        System.out.println(mapGame);
 
         System.out.println("Zakończenie wątka głównego");
     }
