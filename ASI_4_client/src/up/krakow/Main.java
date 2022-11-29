@@ -2,6 +2,7 @@ package up.krakow;
 
 import up.krakow.DB.DBConnection;
 import up.krakow.DB.DBOperation;
+import up.krakow.server.UDPClient;
 import up.krakow.testThread.TikTak;
 import up.krakow.testThread.startTikTak;
 import up.krakow.testThread.testRunnable;
@@ -66,15 +67,22 @@ public class Main {
 //            e.printStackTrace();
 //        }
 
-        DBConnection conn = new DBConnection();
-        Connection c = conn.connectToMySql();
-        DBOperation operation = new DBOperation(c);
-//        operation.insertPerson("Jan", "Nowak", 36);
-//        conn.connectToSQLite();
-        operation.getCountPersonProc();
-        operation.getAllPersonProc();
-//        conn.createTable();
-        conn.disconnect();
+//        DBConnection conn = new DBConnection();
+//        Connection c = conn.connectToMySql();
+//        DBOperation operation = new DBOperation(c);
+////        operation.insertPerson("Jan", "Nowak", 36);
+////        conn.connectToSQLite();
+//        operation.getCountPersonProc();
+//        operation.getAllPersonProc();
+////        conn.createTable();
+//        conn.disconnect();
+
+        UDPClient client = new UDPClient();
+        for (int i=0; i<15; i++){
+            client.sendMessage(i+"");
+        }
+        client.sendMessage("end");
+        client.close();
 
         System.out.println("Zakończenie wątka głównego");
     }
