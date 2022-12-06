@@ -2,6 +2,9 @@ package up.krakow;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class BoardGame {
 
@@ -95,4 +98,88 @@ public class BoardGame {
         return name + " (" + year + "), ocena=" + rating + ", cena=" + price +
                 ", gracze=" + minPlayers + " - " +maxPlayers ;
     }
+
+    public void grupingGameByReating(List<BoardGame> boardGameList){
+        Map<Double, List<BoardGame>> tempMap = boardGameList.stream()
+                .collect(Collectors.groupingBy(BoardGame::getRating));
+
+        System.out.println(tempMap);
+    }
+
+
+	// punkt A
+	public void findGamesBetweenYear(List<BoardGame> boardGameList){
+		List<BoardGame> tempGame = boardGameList.stream()
+				.filter(g -> g.year >= 2010)
+				.filter(g -> g.year <= 2019)
+				.filter(g -> g.name.split(" ").length > 3)
+				.collect(Collectors.toList());
+	}
+	// punkt B
+	public void findGramsBetweenRating(List<BoardGame> boardGameList){
+		List<BoardGame> tempGame = boardGameList.stream()
+				.filter(g->g.rating > 7.0)
+				.filter(g->g.rating < 8.5)
+				.filter(g->g.price > 60)
+				.sorted(Comparator.comparing(BoardGame::getName))
+				.collect(Collectors.toList());
+	}
+	// punkt C
+	public void findLimitGame(List<BoardGame> boardGameList){
+		List<BoardGame> tempGame = boardGameList.stream()
+				.filter(g -> g.year >= 2010)
+				.filter(g -> g.year <= 2019)
+				.filter(g -> g.name.split(" ").length > 3)
+				.limit(6)
+				.collect(Collectors.toList());
+	}
+	// punkt D
+	public void getGameBeforeReating(List<BoardGame> boardGameList){
+		Map<Double, List<BoardGame>> tempMap = boardGameList.stream()
+				.collect(Collectors.groupingBy(BoardGame::getRating));
+	}
+	// punkt E
+	public void findGamesBetweenYearSorted(List<BoardGame> boardGameList){
+		List<BoardGame> tempGame = boardGameList.stream()
+				.filter(g -> g.year >= 2010)
+				.filter(g -> g.year <= 2019)
+				.filter(g -> g.name.split(" ").length > 3)
+				.sorted(Comparator.comparing(BoardGame::getName))
+				.collect(Collectors.toList());
+	}
+	// punkt F
+	public void calculteGamePrace(List<BoardGame> boardGameList){
+		// obliczenie średniej ceny dla całego zestawinia
+		double pric1 = boardGameList.stream()
+				.mapToDouble(BoardGame::getPrice)
+				.average()
+				.getAsDouble();
+		System.out.println("średnia cena gier " + pric1);
+		// obliczenie średniej ceny gier dla wybranego filtrowania
+		double price2 = boardGameList.stream()
+				.filter(g -> g.year >= 2010)
+				.filter(g -> g.year <= 2019)
+				.filter(g -> g.name.split(" ").length > 3)
+				.mapToDouble(BoardGame::getPrice)
+				.average()
+				.getAsDouble();
+		System.out.println("średnia cena gier dla przefiltrowanego zbioru" + price2);
+	}
+	// punkt G
+	public void findFerstElementInList(List<BoardGame> boardGameList){
+		BoardGame game = boardGameList.stream()
+				.filter(g -> g.year == 2015)
+				.filter(g -> g.minPlayers == 2)
+				.filter(g -> g.maxPlayers == 4)
+				.findFirst()
+				.orElse(null);
+	}
+	// punkt H
+	public void checkGameBeforeReating(List<BoardGame> boardGameList, double reating){
+		if (boardGameList.stream().anyMatch(g -> g.getRating() == reating)){
+			System.out.println("Tak");
+		}else{
+			System.out.println("Nie");
+		}
+	}
 }

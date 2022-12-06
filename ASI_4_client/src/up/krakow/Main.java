@@ -2,6 +2,7 @@ package up.krakow;
 
 import up.krakow.DB.DBConnection;
 import up.krakow.DB.DBOperation;
+import up.krakow.server.SecretInfo;
 import up.krakow.server.UDPClient;
 import up.krakow.testThread.TikTak;
 import up.krakow.testThread.startTikTak;
@@ -9,11 +10,14 @@ import up.krakow.testThread.testRunnable;
 import up.krakow.testThread.testThread;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -82,21 +86,34 @@ public class Main {
 //        client.sendMessage("end");
 //        client.close();
 
+
         BoardGame bg = new BoardGame();
         List<BoardGame> listBordGame = bg.initListGame();
+//
+        bg.grupingGameByReating(listBordGame);
 
-        Map<Integer, List<BoardGame>> mapGame = listBordGame.stream()
-                .filter(g -> g.name.contains(" "))
-                .filter(g -> g.rating > 7.5)
-                .filter(g -> g.price < 50)
-                        .collect(Collectors.groupingBy(BoardGame::getYear));
-
-        BoardGame maxBG = listBordGame.stream()
-                .max(Comparator.comparing(BoardGame::getPrice)).get();
-
-        System.out.println(maxBG);
-
-        System.out.println(mapGame);
+//        Supplier<Stream<BoardGame>> boardGameStream = () -> listBordGame.stream();
+//
+//        Map<Integer, List<BoardGame>> mapGame = listBordGame.stream()
+//                .filter(g -> g.name.contains(" "))
+//                .filter(g -> g.rating > 7.5)
+//                .filter(g -> g.price < 50)
+//                .collect(Collectors.groupingBy(BoardGame::getYear));
+//
+//        BoardGame maxBG = boardGameStream.get()
+//                .max(Comparator.comparing(BoardGame::getPrice))
+//                .orElse(null);
+//
+//        BoardGame tempList = boardGameStream.get()
+//                .filter(g -> g.price > 50 )
+//                .limit(10)
+//                .findFirst().orElse(null);
+//
+//        boardGameStream.get().anyMatch(g -> g.rating == 5.9);
+//
+//        System.out.println(maxBG);
+//
+//        System.out.println(mapGame);
 
         System.out.println("Zakończenie wątka głównego");
     }
